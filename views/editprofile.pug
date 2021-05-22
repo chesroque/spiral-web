@@ -1,0 +1,94 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible', content='ie=edge')
+  title Spiral
+  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
+  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+  link(rel='stylesheet', href='/stylesheets/home.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  script(src='https://kit.fontawesome.com/a076d05399.js')
+nav.navbar.navbar-expand-md.navbar-custom
+  a.logo
+    img(src='images/spiral.png', ,='', width='40px')
+  a.navbar-logo(style='font-size: 40px;')  SPIRAL 
+  ul.navbar-nav.ml-auto
+    .items
+      li
+        a(href='/home')  #{home} 
+      li
+        a(href='/profile') #{profile} 
+      li
+        a(href='/home') #{signout} 
+      li
+        a(href='checkout.html')
+          i.fa.fa-shopping-cart(aria-hidden='true')
+    form.form-inline.ml-auto
+      li.search-icon
+        input(type='search', placeholder='Search')
+        label.icon
+          span.fa.fa-search  
+.container(style='margin-left: -1px')
+  .row.gutters
+    .col-xl-3.col-lg-3.col-md-12.col-sm-12.col-12
+      .card.h-100(style='background-color: #eefae7')
+        .card-body
+          .account-settings
+            .user-profile
+              .user-avatar
+                img(src='https://pbs.twimg.com/profile_images/1342423201578532864/MXWr4IbZ_400x400.jpg', ,='', width='280px', style='margin-left: -19px' )
+              h5.user-name(style='margin-left: -20px') Francine#{fname} #{lname}
+              h6.username(style='margin-left: -20px') @ches #{username}
+    .col-xl-9.col-lg-9.col-md-12.col-sm-12.col-12
+      .card.h-100(style='background-color: #eefae7')
+        .card-body
+          .row.gutters
+          form(action='/edit', method='POST', style='background-color: #eefae7')
+            .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
+              h6.mb-2.text-primary Personal Details
+            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
+              .form-group
+                label(for='username') Username
+                input#fullName.form-control(type='text', placeholder='username', name = 'username')
+            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
+              .form-group
+                label(for='firstName') First Name
+                input#fullName.form-control(type='text', placeholder='First Name', name = 'fname')
+            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
+              .form-group
+                label(for='lastName') Last Name
+                input#fullName.form-control(type='text', placeholder='Last Name', name ='lname')
+            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
+              .form-group
+                label(for='eMail') Email
+                input#eMail.form-control(type='email', placeholder='Email Address', name ='email')
+            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
+              .form-group
+                label(for='password') New Password
+                input#pw.form-control(type='password', placeholder='New Password', name = 'password')
+            .row.gutters
+              .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
+                .text-right
+                  button#submit.btn.btn-primary(type='submit', style='color: black;\
+                    background-color: whitesmoke')  Update
+    footer.bg-dark.text-white.pt-5.pb-4
+  .container.text-center.text-md-left
+    .row.text-center.text-md-left
+      .col-md-3.col-lg-3.col-xl-3.mx-auto.mt-3
+        a.fb-ic
+          i.fab.fa-facebook-f.fa-lg.white-text.mx-3.mx-md-4.fa-2x  
+        // Twitter
+        a.tw-ic
+          i.fab.fa-twitter.fa-lg.white-text.mx-3.mx-md-4.fa-2x  
+        // Google +
+        a.gplus-ic
+          i.fab.fa-google-plus-g.fa-lg.white-text.mx-3.mx-md-4.fa-2x  
+        // Linkedin
+        a.li-ic
+          i.fab.fa-linkedin-in.fa-lg.white-text.mx-3.mx-md-4.fa-2x  
+        // Instagram
+        a.ins-ic
+          i.fab.fa-instagram.fa-lg.white-text.mx-3.mx-md-4.fa-2x
