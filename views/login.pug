@@ -9,12 +9,12 @@ head
   link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
   link(href='/stylesheets/login.css', rel='stylesheet')
 main.form-answer
-  form(action='/login', method='POST')
+  form(action='/user/login', method='POST')
     img.mb-4(src='./images/spiral.png', alt='', width='100', height='100')
     h1.h3.mb-3.fw-normal SPIRAL
     p(style='color:red') #{message} #{message2}
     .form-floating
-      input#floatingInput.form-control(type='email', placeholder='Email Address', name = 'email' required)
+      input#floatingInput.form-control(type='email', placeholder='Email Address', name = 'username' required)
     .form-floating
       input#floatingPassword.form-control(type='password', placeholder='Password', name = 'password' required)
     .checkbox.mb-3
@@ -24,5 +24,4 @@ main.form-answer
     div
       button.w-100.btn.btn-lg.btn-secondary(type='submit') Log-In
       br
-      button.w-100.btn.btn-lg.btn-secondary(type='submit')
-        a(href='/signup') Create Account
+      a.w-100.btn.btn-lg.btn-secondary(type='', href='/user/signup') Create Account

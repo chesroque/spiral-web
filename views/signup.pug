@@ -9,20 +9,20 @@ head
   link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
   link(href='/stylesheets/login.css', rel='stylesheet')
 main.form-answer
-  form(action='/register', method='POST')
+  form(action='/user/signup', method='POST')
     img.mb-4(src='./images/spiral.png', alt='', width='100', height='100')
     h1.h3.mb-3.fw-normal SPIRAL
     p(style='color:red') #{message} 
     .form-floating
       input(type='file', name='image')
     .form-floating
-      input#floatingInput.form-control(type='name', placeholder='First Name' name = 'fname' required)
+      input#floatingInput.form-control(type='text', placeholder='First Name' name = 'fname' required)
     .form-floating
-      input#floatingInput.form-control(type='name', placeholder='Last Name' name = 'lname' required)
+      input#floatingInput.form-control(type='text', placeholder='Last Name' name = 'lname' required)
     .form-floating
       input#floatingInput.form-control(type='email', placeholder='Email Address' name ='email' required) 
     .form-floating
-      input#floatingInput.form-control(type='username', placeholder='Username' name ='username' required)
+      input#floatingInput.form-control(type='text', placeholder='Username' name ='username' required)
     .form-floating
       input#floatingPassword.form-control(type='password', placeholder='Password' name ='password' required)
     br

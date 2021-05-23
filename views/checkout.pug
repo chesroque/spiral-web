@@ -4,14 +4,13 @@ head
   meta(name='viewport', content='width=device-width, initial-scale=1.0')
   meta(http-equiv='X-UA-Compatible', content='ie=edge')
   title Spiral
-  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
-  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
-  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
   link(rel='stylesheet', href='/stylesheets/main.css')
   link(rel='stylesheet', href='/stylesheets/home.css')
   link(rel='stylesheet', href='/stylesheets/style.css')
   meta(name='viewport', content='width=device-width, initial-scale=1.0')
   script(src='https://kit.fontawesome.com/a076d05399.js')
+  link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous')
+
 nav.navbar.navbar-expand-md.navbar-custom
   a.logo
     img(src='images/spiral.png', ,='', width='40px')
@@ -19,7 +18,7 @@ nav.navbar.navbar-expand-md.navbar-custom
   ul.navbar-nav.ml-auto
     .items
       li
-        a(href='/home')  Home 
+        a(href='/')  Home 
       li
         a(href='/profile')  Profile 
       li
@@ -38,6 +37,12 @@ nav.navbar.navbar-expand-md.navbar-custom
       span.text-primary Your cart
       span.badge.bg-primary.rounded-pill 2
     ul.list-group.mb-3
+      each product in cart
+        li.list-group-item.d-flex.justify-content-between.lh-sm
+          div
+            h6.my-0 #{product.name}
+            small.text-muted #{product.description}
+          span.text-muted ₱#{product.price} 
       li.list-group-item.d-flex.justify-content-between.lh-sm
         div
           h6.my-0 Pink Swan Floater
@@ -54,7 +59,7 @@ nav.navbar.navbar-expand-md.navbar-custom
           small SUMMERTIME
         span.text-success -PHP 100
       li.list-group-item.d-flex.justify-content-between
-        span Total Amount (PHP)730
+        span Total Amount #{total}
         strong PHP630
     form.card.p-2
       .input-group
