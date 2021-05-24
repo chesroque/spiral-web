@@ -1,284 +1,52 @@
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  meta(http-equiv='X-UA-Compatible', content='ie=edge')
-  title Spiral
-  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
-  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
-  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
-  link(rel='stylesheet', href='/stylesheets/home.css')
-  link(rel='stylesheet', href='/stylesheets/profile.css')
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  script(src='https://kit.fontawesome.com/a076d05399.js')
-  link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css', rel='stylesheet')
-  script(src='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js')
-  script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
-  // IMPORT JQUERY (from CDN or download it)
-script(src='https://code.jquery.com/jquery-3.6.0.min.js', integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=', crossorigin='anonymous')
-script(type='text/javascript').
-  var totalExp=0;
-  var tFood=0;
-  var tTranspo=0;
-  var tBills=0;
-  $(document).ready(function() {
-  $("#upload").click(function() {
-  isComplete();
-  getItem();
-  });
-  // Place all functions and validations here
-  function isComplete() {
-  var itemname = document.getElementsByName(&quot;itemname&quot;).value;
-  var itemimage = document.getElementsByName(&quot;itemimage&quot;).value;
-  var description = document.getElementsByName(&quot;itemdescription&quot;).value;
-  var amount = document.getElementsByName(&quot;amount&quot;).value;
-  var itemcategory = document.getElementsByName(&quot;itemcategory&quot;).value;
-  var checker = new Boolean(true);
-  if(description == "") {
-  $('#error').text("Please enter a description");
-  $('#item').css("border", "1px solid #B00000");
-  checker = false;
-  }
-  else if(amount == "") {
-  $('#error').text("Please enter an amount.");
-  $('#amount').css("border", "1px solid #B00000");
-  checker = false;
-  }
-  else if(amount != "") {
-  $('#error').text("");
-  $('#amount').css("border", "1px solid #DDDDDD");
-  checker = false;
-  }
-  else if(description != "") {
-  $('#error').text("");
-  $('#item').css("border", "1px solid #DDDDDD");
-  checker = false;
-  }
-  else {
-  Display(checker, itemname, description, amount, itemcategory, itemcategory);
-  }
-  }
-  //list and append items
-  function getItem(){
-  var itemname = document.getElementsByName(&quot;itemname&quot;).value;
-  var item = document.getElementsByName(&quot;itemimage&quot;).value;
-  var description = document.getElementsByName(&quot;itemdescription&quot;).value;
-  var itemcategory = document.getElementsByName(&quot;itemcategory&quot;).value;
-  var amount = document.getElementsByName(&quot;amount&quot;).value;
-  var newEntry = $('<div class="media>' +
-  '<a class="pull-left" href="#"> <img class="media-object mn thumbnail mw1" src="https://pbs.twimg.com/profile_images/1342423201578532864/MXWr4IbZ_400x400.jpg"> </a>' +
-  '<div class="media-body">' +
-  '<div>' +
-  '<div class="dropdown">' +
-  '<button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-  '<i class="fa fa-ellipsis-h"></i>' +
-  '</button>' +
-  '</div>' +
-  '</div>' +
-  '<h5 class="media-heading mb20">Francine Park' +
-  '<small> - 2 hours ago</small>' +
-  '</h5>' + itemname+
-  '<p>Does anyone know where I can find dexter shades?</p>' +
-  '<img src="images/item2.jpeg"><br>' +
-  '<a class="float-left btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>' +
-  '<a class="btn btn-info btn-circle text-uppercase" data-toggle="collapse"  href="#reply1" id="reply">' + '<span class="glyphicon glyphicon-share-alt"></span> Reply</a>'+
-  '<a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#comment1"><span class="glyphicon glyphicon-comment"></span> Comment</a>' +
-  '</div>'+
-  '</div>' );
-  $("body").append('<div class="food foodExp"></div>');
-  $("body").append(newEntry);
-  $("#itemname").val("");
-  $("#amount").val("");
-  $("#category").val("");
-  }
-  })
+extends base.pug
 
-nav.navbar.navbar-expand-md.navbar-custom
-  a.logo
-    img(src='images/spiral.png', ,='', width='40px')
-  a.navbar-logo(style='font-size: 40px;')  #{title}
-  ul.navbar-nav.ml-auto
-    .items
-      li
-        a(href='/home')  #{home}
-      li
-        a(href='/logout')  #{signout} 
-      li
-        a(href='/checkout')
-          i.fa.fa-shopping-cart(aria-hidden='true')
-    form.form-inline.ml-auto
-      li.search-icon
-        input(type='search', placeholder='Search')
-        label.icon
-          span.fa.fa-search  
-section#content
-  br
-  .page-heading
-    .media.clearfix
-      .media-left.pr30
-        a(href='#')
-          img.media-object.mw50(src='https://pbs.twimg.com/profile_images/1342423201578532864/MXWr4IbZ_400x400.jpg')
-      .media-body.va-m
-        h2.media-heading
-          | #{fname} #{lname}
-          small  - Profile
-        p.lead
-          | Shopaholic tita of the Century. Who needs jowa if you are rich and can buy anything you want!!
-      div
-        button.w-100.btn.btn-lg.btn-secondary(type='button', style= 'background-color: whitesmoke; color: black')
-          a(href='/edit') Edit Profile
-      div
-        button.w-100.btn.btn-lg.btn-secondary(type='button', style= 'background-color: whitesmoke; color: black')
-          a Delete Account
-  .row
-    .col-md-4
-      .panel
-        .panel-heading
-          span.panel-icon
-            i.fa.fa-star
-          span.panel-title  Username
-        .panel-body.pn
-          p(name = 'username') #{username}
-    .col-md-8
-      .tab-block
-        ul.nav.nav-tabs
-          li.active
-            a(href='#tab1', data-toggle='tab') Buyer&apos;s Post
-        .panel
-          br
-          a.btn.btn-warning.btn-circle.text-uppercase(data-toggle='collapse', href='#post', style= 'background-color: whitesmoke; color: black' id ='upload')
-            span.glyphicon.glyphicon-comment
-            |  Post
-          #post.collapse
-            ul.media-list
-              li.media.media-replied
-                .container.pb-cmnt-container
-                  .row
-                    .col-md.col-md-offset-3
-                      .panel.panel-info
-                        .panel-body(style= 'background-color: #eefae7')
-                          form(action='/profile', method='POST')
-                            .form-floating
-                              input(type='file', name='itemimage')
-                            .form-floating
-                              input#floatingInput.form-control(type='text', placeholder='Item Name', name='itemname')
-                              input#floatingInput.form-control(type='text', placeholder='Amount', name='amount')
-                              textarea.pb-cmnt-textarea(type = 'text' placeholder='Description', name='itemdescription')
-                            .col-md-4
-                              label.form-label(for='itemcategory', name='category') Category
-                              select#state.form-select(required='')
-                                option(value='') Choose...
-                                option Gadgets
-                                option Clothing
-                                option Accesories
-                                option Shoes
-                                option Furniture
-                                option Appliances
-                                option Essentials
-                                option Others
-                              button.btn.btn-primary.pull-right(type='submit') Upload
-        .tab-content.p30(style='height: 730px;')
-          #tab1.tab-pane.active
-            .media
-              a.pull-left(href='#')
-                img.media-object.mn.thumbnail.mw1(src='https://pbs.twimg.com/profile_images/1342423201578532864/MXWr4IbZ_400x400.jpg')
-              .media-body
-                div
-                  .dropdown
-                    button#gedf-drop1.btn.btn-link.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                      i.fa.fa-ellipsis-h
-                    .dropdown-menu.dropdown-menu-right(aria-labelledby='gedf-drop1')
-                      .h6.dropdown-header Configuration
-                      a.dropdown-item Edit
-                      a.dropdown-item Delete
-                h5.media-heading.mb20
-                  |  #{fname} #{lname}
-                  small  - 2 hours ago
-                img(src='images/item2.jpeg')
-                br
-                a.float-left.btn.text-white.btn-danger
-                  i.fa.fa-heart
-                  |  Like
-                a#reply.btn.btn-info.btn-circle.text-uppercase(data-toggle='collapse', href='#reply1')
-                  span.glyphicon.glyphicon-share-alt
-                  |  Reply
-                a.btn.btn-warning.btn-circle.text-uppercase(data-toggle='collapse', href='#comment1')
-                  span.glyphicon.glyphicon-comment
-                  |  Comment
-            #reply1.collapse
-              ul.media-list
-                li.media.media-replied
-                  .container.pb-cmnt-container
-                    .row
-                      .col-md.col-md-offset-3
-                        .panel.panel-info
-                          .panel-body
-                            textarea.pb-cmnt-textarea(placeholder='Write your comment here!')
-                            form.form-inline
-                              .btn-group
-                                button.btn(type='button')
-                                  span.fa.fa-picture-o.fa-lg
-                                button.btn(type='button')
-                                  span.fa.fa-video-camera.fa-lg
-                                button.btn(type='button')
-                                  span.fa.fa-microphone.fa-lg
-                                button.btn(type='button')
-                                  span.fa.fa-music.fa-lg
-                              button.btn.btn-primary.pull-right(type='button') Post
-            #comment1.collapse
-              ul.media-list
-                li.media.media-replied
-                  .card.gedf-card
-                    .card-header
-                      .d-flex.justify-content-between.align-items-center
-                        .d-flex.justify-content-between.align-items-center
-                          .mr-2
-                            img.rounded-circle(width='45', src='https://i.mydramalist.com/ZrLd8f.jpg')
-                          .ml-2
-                            .h5.m-0 @rubyjen
-                            .h7.text-muted
-                              a(href='sellerprof.html') Jennie Kim
-                        div
-                          .dropdown
-                            button#gedf-drop1.btn.btn-link.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                              i.fa.fa-ellipsis-h
-                            .dropdown-menu.dropdown-menu-right(aria-labelledby='gedf-drop1')
-                              .h6.dropdown-header Configuration
-                              a.dropdown-item Edit
-                              a.dropdown-item Delete
-                    .card-body
-                      .text-muted.h7.mb-2
-                        i.fa.fa-clock-o
-                        | 10 min ago
-                      h5.card-title Hey Sister!
-                      p.card-text
-                        | I have that Dexter shades you&apos;re looking for on my shop. Plus I have some trendy and fashionable clothes that could fit you.
-                        | Please visit my shop :D
-                    .card-footer
-                      a.card-link(href='#')
-                        i.fa.fa-gittip
-                        |  Like
-                      a.card-link(href='#comment2', data-toggle='collapse')
-                        i.fa.fa-comment
-                        |  Comment
-                      a.card-link(href='#')
-                        i.fa.fa-mail-forward
-                        |  Share
-                    #comment2.collapse
-                      ul.media-list
-                        li.media.media-replied
-                          .container.pb-cmnt-container
-                            .row
-                              .col-md.col-md-offset-3
-                                .panel.panel-info
-                                  .panel-body
-                                    textarea.pb-cmnt-textarea(placeholder='Write your comment here!')
-                                    form.form-inline
-                                      .btn-group
-                                        button.btn(type='button')
-                                          span.fa.fa-picture-o.fa-lg
-                                      button.btn.btn-primary.pull-right(type='button') Post
-            link(href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', rel='stylesheet', integrity='sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN', crossorigin='anonymous')
-            script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
-            script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49', crossorigin='anonymous')
-            script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy', crossorigin='anonymous')
+block content
+  div.m-5
+    h1.text-center Profile
+    h1 
+      strong #{username}
+    if products
+      .py-3
+        each product in products
+          a.card(style='width: 18rem; text-decoration: none; color: black', class="col-2", href=`/product/${product._id}`)
+            if product.image
+              img.card-img-top(src=`data:${product.image.contentType};base64,${product.image.data}`, style='height: 200px; object-fit: fill')
+            else
+              img.card-img-top.mx-auto(src='/images/box.png', style='height: 200px; object-fit: contain')
+              hr
+            div.card-body
+              h4.card-title #{product.name}
+              //- h6.card-subtitle.mb-2.text-muted #{product.description}
+              strong.mb-2 ₱#{product.price}
+              div.d-flex(style="gap: 8px")
+                form
+                  button.btn.btn-secondary(type='submit', title='Quick Shop')
+                    i.fa.fa-eye(style="fill: blue")  
+                form
+                  button.btn.btn-secondary(type='submit', title='Add to Wishlist')
+                    i.fa.fa-heart  
+                unless product.isInCart
+                  form(action=`/user/addToCart/${product._id}`, method='POST')
+                    button.btn.btn-secondary(type='submit', title='Add to Cart')
+                        i.fa.fa-shopping-cart  
+                else 
+                  form(action=`/user/cartRemove/${product._id}`, method='POST')
+                    button.btn.btn-primary(type='submit', title='Remove in Cart')
+                        i.fa.fa-shopping-cart  
+
+    form(action='/product', method="POST", enctype="multipart/form-data")
+      .mb-3
+        label.form-label(for='exampleInputEmail1') Product Name
+        input#exampleInputEmail1.form-control(type='text', name="name", required)
+      .mb-3
+        label.form-label(for='exampleInputPassword1') Product Description
+        input#exampleInputPassword1.form-control(type='text', name='description', required)
+      .mb-3
+        label.form-label(for='exampleInputPassword1') Price
+        input#exampleInputPassword1.form-control(type='text', name='price', required)
+      .mb-3
+        label.form-label(for='image') Product Image
+        input#exampleInputPassword1.form-control(type='file', name='image', accepts='image/*', required)
+      button.btn.btn-primary(type='submit', style="width: 20%") Submit
+
+
