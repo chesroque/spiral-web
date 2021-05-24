@@ -1,78 +1,88 @@
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  meta(http-equiv='X-UA-Compatible', content='ie=edge')
-  title Spiral
-  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
-  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
-  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
-  link(rel='stylesheet', href='/stylesheets/home.css')
-  link(rel='stylesheet', href='/stylesheets/style.css')
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  script(src='https://kit.fontawesome.com/a076d05399.js')
-nav.navbar.navbar-expand-md.navbar-custom
-  a.logo
-    img(src='images/spiral.png', ,='', width='40px')
-  ul.navbar-nav.ml-auto
-    .items
-      li
-        a(href='/home')  #{home} 
-      li
-        a(href='/profile') #{profile} 
-      li
-        a(href='/home') #{signout} 
-      li
-        a(href='checkout.html')
-          i.fa.fa-shopping-cart(aria-hidden='true')
-    form.form-inline.ml-auto
-      li.search-icon
-        input(type='search', placeholder='Search')
-        label.icon
-          span.fa.fa-search  
-.container(style='margin-left: -1px')
-  .row.gutters
-    .col-xl-3.col-lg-3.col-md-12.col-sm-12.col-12
+extends base.pug
+
+block content
+  .d-flex(style="height: 100%")
+    .card.w-50(style='background-color: #eefae7')
+      .card-body.text-center
+        .account-settings
+          .user-profile
+            .user-avatar
+              img(src='https://pbs.twimg.com/profile_images/1342423201578532864/MXWr4IbZ_400x400.jpg', ,='', width='280px', style='margin-left: -19px' )
+            h5.user-name(style='margin-left: -20px') Francine#{fname} #{lname}
+            h6.username(style='margin-left: -20px') @ches #{username}
+    .w-100
       .card.h-100(style='background-color: #eefae7')
-        .card-body
-          .account-settings
-            .user-profile
-              .user-avatar
-                img(src='https://pbs.twimg.com/profile_images/1342423201578532864/MXWr4IbZ_400x400.jpg', ,='', width='280px', style='margin-left: -19px' )
-              h5.user-name(style='margin-left: -20px') Francine#{fname} #{lname}
-              h6.username(style='margin-left: -20px') @ches #{username}
-    .col-xl-9.col-lg-9.col-md-12.col-sm-12.col-12
-      .card.h-100(style='background-color: #eefae7')
-        .card-body
-          .row.gutters
-          form(action='/edit', method='POST', style='background-color: #eefae7')
-            .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
-              h6.mb-2.text-primary Personal Details
-            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
-              .form-group
-                label(for='username') Username
-                input#fullName.form-control(type='text', placeholder='username', name = 'username')
-            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
-              .form-group
-                label(for='firstName') First Name
-                input#fullName.form-control(type='text', placeholder='First Name', name = 'fname')
-            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
-              .form-group
-                label(for='lastName') Last Name
-                input#fullName.form-control(type='text', placeholder='Last Name', name ='lname')
-            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
-              .form-group
-                label(for='eMail') Email
-                input#eMail.form-control(type='email', placeholder='Email Address', name ='email')
-            .col-xl-6.col-lg-6.col-md-6.col-sm-6.col-12
-              .form-group
-                label(for='password') New Password
-                input#pw.form-control(type='password', placeholder='New Password', name = 'password')
-            .row.gutters
-              .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
-                .text-right
-                  button#submit.btn.btn-primary(type='submit', style='color: black;\
-                    background-color: whitesmoke')  Update
+        h1.text-center.my-3
+          strong Settings
+        .card-body.p-4
+          #accordionExample.accordion.h-75
+            .accordion-item
+              h2#headingOne.accordion-header
+                button.accordion-button(type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne')
+                  | Edit Personal Details
+              #collapseOne.accordion-collapse.collapse.show(aria-labelledby='headingOne' data-bs-parent='#accordionExample')
+                .accordion-body
+                  form.d-flex.flex-column(action='/settings/info', method='POST', style='gap: 15px;')
+                    .flex-item
+                      h6.mb-2.text-primary Personal Details
+                    .flex-item
+                      .form-group
+                        label(for='username') Username
+                        input#fullName.form-control(type='text', placeholder='username', name = 'username', value=`${user.name}`)
+                    .flex-item
+                      .form-group
+                        label(for='firstName') First Name
+                        input#fullName.form-control(type='text', placeholder='First Name', name = 'fname', value=`${user.fname}`)
+                    .flex-item
+                      .form-group
+                        label(for='lastName') Last Name
+                        input#fullName.form-control(type='text', placeholder='Last Name', name ='lname', value=`${user.lname}`)
+                    .flex-item
+                      .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
+                        .text-right
+                          button#submit.btn.btn-primary(type='submit', style='color: black;\
+                            background-color: whitesmoke')  Update
+            .accordion-item
+              h2#headingTwo.accordion-header
+                button.accordion-button.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo')
+                  | Change Password
+              #collapseTwo.accordion-collapse.collapse(aria-labelledby='headingTwo' data-bs-parent='#accordionExample')
+                .accordion-body
+
+                  if isOldPasswordIncorrect
+                    .alert.alert-danger(role='alert')
+                      | Incorrect Old Password
+
+                  form.d-flex.flex-column(action='/settings/password', method='POST', style='gap: 15px;')
+                    .flex-item
+                      h6.mb-2.text-primary Personal Details
+                    .flex-item
+                      .form-group
+                        label(for='oldPassword') Old Password
+                        input#fullName.form-control(type='password', placeholder='Old Password', name = 'oldPassword')
+                    .flex-item
+                      .form-group
+                        label(for='newPassword') New Password
+                        input#fullName.form-control(type='password', placeholder='New Password', name = 'newPassword')
+                    .flex-item
+                      .form-group
+                        label(for='confirmNewPassword') Confirm New Password
+                        input#fullName.form-control(type='password', placeholder='Confirm New Password', name ='confirmNewPassword')
+                    .row.gutters
+                      .flex-item
+                        .text-right
+                          button.btn.btn-primary(type='submit', style='color: black;\
+                            background-color: whitesmoke')  Update
+            .accordion-item
+              h2#headingThree.accordion-header
+                button.accordion-button.collapsed(type='button' data-bs-toggle='collapse' data-bs-target='#collapseThree' aria-expanded='false' aria-controls='collapseThree')
+                  | Accordion Item #3
+              #collapseThree.accordion-collapse.collapse(aria-labelledby='headingThree' data-bs-parent='#accordionExample')
+                .accordion-body
+                  strong This is the third item&apos;s accordion body.
+                  |  It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It&apos;s also worth noting that just about any HTML can go within the 
+                  code .accordion-body
+                  | , though the transition does limit overflow.
     footer.bg-dark.text-white.pt-5.pb-4
   .container.text-center.text-md-left
     .row.text-center.text-md-left

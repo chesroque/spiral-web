@@ -2,6 +2,38 @@ extends base.pug
 
 block content
   div.m-5
+    h1.text-center Profile
+    h1 
+      strong #{username}
+    if products
+      .py-3
+        each product in products
+          a.card(style='width: 18rem; text-decoration: none; color: black', class="col-2", href=`/product/${product._id}`)
+            if product.image
+              img.card-img-top(src=`data:${product.image.contentType};base64,${product.image.data}`, style='height: 200px; object-fit: fill')
+            else
+              img.card-img-top.mx-auto(src='/images/box.png', style='height: 200px; object-fit: contain')
+              hr
+            div.card-body
+              h4.card-title #{product.name}
+              //- h6.card-subtitle.mb-2.text-muted #{product.description}
+              strong.mb-2 ₱#{product.price}
+              div.d-flex(style="gap: 8px")
+                form
+                  button.btn.btn-secondary(type='submit', title='Quick Shop')
+                    i.fa.fa-eye(style="fill: blue")  
+                form
+                  button.btn.btn-secondary(type='submit', title='Add to Wishlist')
+                    i.fa.fa-heart  
+                unless product.isInCart
+                  form(action=`/user/addToCart/${product._id}`, method='POST')
+                    button.btn.btn-secondary(type='submit', title='Add to Cart')
+                        i.fa.fa-shopping-cart  
+                else 
+                  form(action=`/user/cartRemove/${product._id}`, method='POST')
+                    button.btn.btn-primary(type='submit', title='Remove in Cart')
+                        i.fa.fa-shopping-cart  
+
     form(action='/product', method="POST", enctype="multipart/form-data")
       .mb-3
         label.form-label(for='exampleInputEmail1') Product Name
@@ -18,30 +50,3 @@ block content
       button.btn.btn-primary(type='submit', style="width: 20%") Submit
 
 
-    if products
-      each product in products
-        a.card(style='width: 18rem; text-decoration: none; color: black', class="col-2", href=`/product/${product._id}`)
-          if product.image
-            img.card-img-top(src=`data:${product.image.contentType};base64,${product.image.data}`, style='height: 200px; object-fit: fill')
-          else
-            img.card-img-top.mx-auto(src='/images/box.png', style='height: 200px; object-fit: contain')
-            hr
-          div.card-body
-            h4.card-title #{product.name}
-            //- h6.card-subtitle.mb-2.text-muted #{product.description}
-            strong.mb-2 ₱#{product.price}
-            div.d-flex(style="gap: 8px")
-              form
-                button.btn.btn-secondary(type='submit', title='Quick Shop')
-                  i.fa.fa-eye(style="fill: blue")  
-              form
-                button.btn.btn-secondary(type='submit', title='Add to Wishlist')
-                  i.fa.fa-heart  
-              unless product.isInCart
-                form(action=`/user/addToCart/${product._id}`, method='POST')
-                  button.btn.btn-secondary(type='submit', title='Add to Cart')
-                      i.fa.fa-shopping-cart  
-              else 
-                form(action=`/user/cartRemove/${product._id}`, method='POST')
-                  button.btn.btn-primary(type='submit', title='Remove in Cart')
-                      i.fa.fa-shopping-cart  

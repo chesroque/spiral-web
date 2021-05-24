@@ -57,7 +57,7 @@ const { renderProducts } = require('./controller/productController');
 
 app.get('/', renderProducts);
 
-app.use('/edit', editRouter);
+app.use('/settings', editRouter);
 app.use('/profile', profileRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/product', product);

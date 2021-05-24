@@ -6,12 +6,13 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(http-equiv='X-UA-Compatible', content='ie=edge')
     title Spiral
-    link(href='https://fonts.googleapis.com/css2?family=Roboto&display=swap' rel='stylesheet')
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js' integrity='sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4' crossorigin='anonymous')
+
     link(rel='stylesheet', href='/stylesheets/home.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     script(src='https://kit.fontawesome.com/a076d05399.js')
-    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous')
 
   body
     block nav
@@ -27,12 +28,15 @@ html
               a(href='/')  Home 
             if isLogged
               li
-                a(href='/profile')  Profile 
+                a(href='/profile/')  Profile 
               li
                 a(href='/user/logout')  Logout 
               li
                 a(href='/checkout')
                   i.fa.fa-shopping-cart(aria-hidden='true')
+              li
+                a(href='/settings')
+                  i.fa.fa-cog(aria-hidden='true')
             else
               li
                 a(href='/user/login')  Login 

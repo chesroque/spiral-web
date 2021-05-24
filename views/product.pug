@@ -15,17 +15,20 @@ block content
   form(action=`/product/comment/${productId}`, method="post", class="form-group")
     .form-group.m-3
       label(for="comment") Comment
-      input.mb-2(type="text", class="form-control", name="comment")
-      label(for="rating") Rating
-      input.mb-3(type="text", name="rating", class="form-control")
+      input.mb-2(type="text", class="form-control", name="comment", required)
+      label(for="rating") Rating (0-5)
+      input.mb-3(type="text", name="rating",pattern="\\b[0-9]\\b", title="0 - 5" ,class="form-control", required)
       button.btn.btn-primary(type="submit", style="width: 20%") Submit 
 
   if product.comments
+    h1.mx-3 Average: #{product.average} / 5
     each comment in product.comments
       if comment.content
         .card.m-3
           .card-body
+            h4 #{comment.username}
             h3 #{comment.content}
+            strong #{comment.rating} / 5
 
 
   

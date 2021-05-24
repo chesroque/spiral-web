@@ -10,14 +10,20 @@ router.get('/', async (req, res) => {
 	const cart = await Promise.all(
 		req.user.cart.map(async (product) => {
 			const query = await Post.findById(product.productId);
+			console.log(query);
 
-			total += query.price;
+			if (query.price) total += query.price;
 			return query;
 		}),
 	);
 	console.log(cart);
 
-	res.render('checkout', { title: 'Spiral', cart: cart, total: total });
+	res.render('checkout', {
+		title: 'Spiral',
+		cart: cart,
+		inCart: cart.length,
+		total: total,
+	});
 });
 
 router.post('/', function (req, res, next) {});

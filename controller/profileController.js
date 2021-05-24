@@ -4,17 +4,18 @@ const User = require('../model/User.js');
 const renderProfileByUsername = async (req, res) => {
 	const { username } = req.params;
 	const userProducts = await Product.find({ createdBy: username });
+	const user = await User.findOne({ name: username }).lean();
 
 	return res.render('profile', {
-		posts: userProducts,
+		products: userProducts,
 		isLogged: req.user !== undefined,
+		username: user.name,
 	});
 };
 
 const renderProfile = async (req, res) => {
 	if (req.user === undefined) return res.redirect('/user/login');
 
-	console.log(req.user.name);
 	res.redirect(`/profile/${req.user.name}`);
 };
 

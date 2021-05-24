@@ -51,11 +51,11 @@ const renderProducts = async (req, res) => {
 			],
 		});
 	} else {
-		products = await Product.find({});
+		products = await Product.find({}).lean();
 	}
 
 	if (req.user) {
-		const newPost = Promise.all(
+		const newProducts = Promise.all(
 			products.map(async (product) => {
 				const cart = await User.find({ 'cart.productId': product._id }).lean();
 
@@ -65,7 +65,7 @@ const renderProducts = async (req, res) => {
 
 		return res.render('home', {
 			title: 'Spiral',
-			products: await newPost,
+			products: await newProducts,
 			isLogged: req.user !== undefined,
 			search: req.query.search,
 		});
@@ -82,7 +82,32 @@ const renderProducts = async (req, res) => {
 const renderProductById = async (req, res) => {
 	const { productId } = req.params;
 
-	const product = await Product.findById(productId);
+	const product = await Product.findById(productId).lean();
+
+	var total = 0;
+
+	if (product.comments[0]) {
+		const commentsWithUsername = await Promise.all(
+			product.comments.map(async (comment) => {
+				const username = await User.findOne({ _id: comment.createdBy });
+
+				total += comment.rating;
+				return { ...comment, username: username.name };
+			}),
+		);
+
+		const tempProduct = {
+			...product,
+			comments: commentsWithUsername,
+			average: total / product.comments.length,
+		};
+
+		return res.render('product', {
+			product: tempProduct,
+			isLogged: req.user !== undefined,
+			productId: productId,
+		});
+	}
 
 	res.render('product', {
 		product: product,
@@ -92,14 +117,16 @@ const renderProductById = async (req, res) => {
 };
 
 const insertComment = async (req, res) => {
+	if (req.user === undefined) return res.redirect('/user/login');
 	const { productId } = req.params;
-	const { comment } = req.body;
+	const { comment, rating } = req.body;
 
 	console.log(comment);
-	const query = await Product.findByIdAndUpdate(productId, {
+	await Product.findByIdAndUpdate(productId, {
 		$push: {
 			comments: {
 				content: comment,
+				rating: rating,
 				createdBy: req.user._id,
 				date: Date.now(),
 			},

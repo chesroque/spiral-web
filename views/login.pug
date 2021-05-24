@@ -10,6 +10,9 @@ head
   link(href='/stylesheets/login.css', rel='stylesheet')
 main.form-answer
   form(action='/user/login', method='POST')
+    if isLoginFailed
+      .alert.alert-danger(role='alert')
+        | Wrong Email or Password
     img.mb-4(src='./images/spiral.png', alt='', width='100', height='100')
     h1.h3.mb-3.fw-normal SPIRAL
     p(style='color:red') #{message} #{message2}
