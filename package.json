@@ -1,8 +1,5 @@
 {
   "name": "spiral2",
-  "engines": {
-    "node": "11.10.0"
-  },
   "version": "0.0.0",
   "private": true,
   "scripts": {
