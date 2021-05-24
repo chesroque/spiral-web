@@ -1,72 +1,47 @@
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  meta(http-equiv='X-UA-Compatible', content='ie=edge')
-  title Spiral
-  link(rel='stylesheet', href='/stylesheets/home.css')
-  link(rel='stylesheet', href='/stylesheets/profile.css')
-  meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  script(src='https://kit.fontawesome.com/a076d05399.js')
-  link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous')
+extends base.pug
 
-body
-  nav.navbar.navbar-expand-md.navbar-custom
-    a.logo
-      img(src='/images/spiral.png', ,='', width='40px')
-    a.navbar-logo(style='font-size: 40px;')  #{title}
-    ul.navbar-nav.ml-auto
-      .items
-        li
-          a(href='/')  Home 
-        if isLogged
-          li
-            a(href='/profile')  Profile 
-          li
-            a(href='/user/logout')  Logout 
-          li
-            a(href='/checkout')
-              i.fa.fa-shopping-cart(aria-hidden='true')
-        else
-          li
-            a(href='/user/login')  Login 
-      form.form-inline.ml-auto
-        li.search-icon
-          input(type='search', placeholder='Search')
-          label.icon
-            span.fa.fa-search  
+block content
   div.m-5
     form(action='/product', method="POST", enctype="multipart/form-data")
       .mb-3
         label.form-label(for='exampleInputEmail1') Product Name
-        input#exampleInputEmail1.form-control(type='text', name="name")
+        input#exampleInputEmail1.form-control(type='text', name="name", required)
       .mb-3
         label.form-label(for='exampleInputPassword1') Product Description
-        input#exampleInputPassword1.form-control(type='text', name='description')
+        input#exampleInputPassword1.form-control(type='text', name='description', required)
       .mb-3
         label.form-label(for='exampleInputPassword1') Price
-        input#exampleInputPassword1.form-control(type='text', name='price')
+        input#exampleInputPassword1.form-control(type='text', name='price', required)
       .mb-3
         label.form-label(for='image') Product Image
-        input#exampleInputPassword1.form-control(type='file', name='image', accepts='image/*')
-      button.btn.btn-primary(type='submit') Submit
+        input#exampleInputPassword1.form-control(type='file', name='image', accepts='image/*', required)
+      button.btn.btn-primary(type='submit', style="width: 20%") Submit
 
 
-    div.d-flex.flex-wrap.justify-content-between.m-4(style="gap: 3rem")
-      each post in posts
-        .card(style='width: 18rem;')
-          img.card-img-top(src=`data:${post.image.contentType};base64,${post.image.data}`)
-          .card-body
-          strong
-            h5.card-title #{post.name}
-          p.card-text ₱#{post.price}
-          div.d-flex(style="gap: 8px")
-            form
-              button.btn.btn-secondary(type='submit', title='Quick Shop')
-                i.fa.fa-eye  
-            form(action='/')
-              button.btn.btn-secondary(type='submit', title='Add to Wishlist')
-                i.fa.fa-heart  
-            form
-              button.btn.btn-secondary(type='submit', title='Add to Cart')
-                i.fa.fa-shopping-cart  
+    if products
+      each product in products
+        a.card(style='width: 18rem; text-decoration: none; color: black', class="col-2", href=`/product/${product._id}`)
+          if product.image
+            img.card-img-top(src=`data:${product.image.contentType};base64,${product.image.data}`, style='height: 200px; object-fit: fill')
+          else
+            img.card-img-top.mx-auto(src='/images/box.png', style='height: 200px; object-fit: contain')
+            hr
+          div.card-body
+            h4.card-title #{product.name}
+            //- h6.card-subtitle.mb-2.text-muted #{product.description}
+            strong.mb-2 ₱#{product.price}
+            div.d-flex(style="gap: 8px")
+              form
+                button.btn.btn-secondary(type='submit', title='Quick Shop')
+                  i.fa.fa-eye(style="fill: blue")  
+              form
+                button.btn.btn-secondary(type='submit', title='Add to Wishlist')
+                  i.fa.fa-heart  
+              unless product.isInCart
+                form(action=`/user/addToCart/${product._id}`, method='POST')
+                  button.btn.btn-secondary(type='submit', title='Add to Cart')
+                      i.fa.fa-shopping-cart  
+              else 
+                form(action=`/user/cartRemove/${product._id}`, method='POST')
+                  button.btn.btn-primary(type='submit', title='Remove in Cart')
+                      i.fa.fa-shopping-cart  

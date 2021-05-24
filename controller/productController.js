@@ -1,5 +1,6 @@
 const Product = require('../model/Product.js');
 const fs = require('fs');
+const User = require('../model/User.js');
 
 const insertProduct = async (req, res) => {
 	const { name, description, price } = req.body;
@@ -35,12 +36,82 @@ const insertProduct = async (req, res) => {
 };
 
 const renderProducts = async (req, res) => {
-	const posts = await Product.find({});
+	var products = {};
 
-	res.render('home', { title: 'Spiral', posts: posts, isLogged: req.user !== undefined });
+	if (req.query.search) {
+		products = await Product.find({
+			$or: [
+				{ name: { $regex: new RegExp(`\\b(${req.query.search})\\b`), $options: 'i' } },
+				{
+					description: {
+						$regex: new RegExp(`\\b(${req.query.search})\\b`),
+						$options: 'i',
+					},
+				},
+			],
+		});
+	} else {
+		products = await Product.find({});
+	}
+
+	if (req.user) {
+		const newPost = Promise.all(
+			products.map(async (product) => {
+				const cart = await User.find({ 'cart.productId': product._id }).lean();
+
+				return { ...product, isInCart: Boolean(cart.length) };
+			}),
+		);
+
+		return res.render('home', {
+			title: 'Spiral',
+			products: await newPost,
+			isLogged: req.user !== undefined,
+			search: req.query.search,
+		});
+	}
+
+	res.render('home', {
+		title: 'Spiral',
+		products: products,
+		isLogged: req.user !== undefined,
+		search: req.query.search,
+	});
+};
+
+const renderProductById = async (req, res) => {
+	const { productId } = req.params;
+
+	const product = await Product.findById(productId);
+
+	res.render('product', {
+		product: product,
+		isLogged: req.user !== undefined,
+		productId: productId,
+	});
+};
+
+const insertComment = async (req, res) => {
+	const { productId } = req.params;
+	const { comment } = req.body;
+
+	console.log(comment);
+	const query = await Product.findByIdAndUpdate(productId, {
+		$push: {
+			comments: {
+				content: comment,
+				createdBy: req.user._id,
+				date: Date.now(),
+			},
+		},
+	});
+
+	res.redirect('back');
 };
 
 module.exports = {
 	insertProduct,
 	renderProducts,
+	renderProductById,
+	insertComment,
 };

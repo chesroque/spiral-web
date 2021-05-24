@@ -3,7 +3,7 @@ const passport = require('passport');
 const router = express.Router();
 
 const { signupUser } = require('../controller/userController');
-const { addToCart } = require('../controller/profileController');
+const { addToCart, cartRemove } = require('../controller/profileController');
 
 router.get('/login', (req, res) => {
 	if (req.user) return res.redirect('/');
@@ -31,5 +31,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.post('/addToCart/:productId', addToCart);
+
+router.post('/cartRemove/:productId', cartRemove);
 
 module.exports = router;

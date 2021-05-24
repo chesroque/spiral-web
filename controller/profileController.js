@@ -5,7 +5,10 @@ const renderProfileByUsername = async (req, res) => {
 	const { username } = req.params;
 	const userProducts = await Product.find({ createdBy: username });
 
-	return res.render('profile', { posts: userProducts });
+	return res.render('profile', {
+		posts: userProducts,
+		isLogged: req.user !== undefined,
+	});
 };
 
 const renderProfile = async (req, res) => {
@@ -21,8 +24,18 @@ const addToCart = async (req, res) => {
 	const { _id } = req.user;
 	const { productId } = req.params;
 
-	const query = await User.findByIdAndUpdate(_id, {
+	await User.findByIdAndUpdate(_id, {
 		$push: { cart: { productId: productId } },
+	});
+
+	res.redirect('back');
+};
+
+const cartRemove = async (req, res) => {
+	const { productId } = req.params;
+
+	const query = await User.findByIdAndUpdate(req.user._id, {
+		$pull: { cart: { productId: productId } },
 	});
 
 	res.json(query);
@@ -32,4 +45,5 @@ module.exports = {
 	renderProfileByUsername,
 	renderProfile,
 	addToCart,
+	cartRemove,
 };

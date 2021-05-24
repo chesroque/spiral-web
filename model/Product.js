@@ -9,6 +9,14 @@ const ProductSchema = mongoose.Schema({
 	},
 	createdBy: String,
 	price: Number,
+	comments: [
+		{
+			createdBy: String,
+			rating: Number,
+			content: String,
+			date: Date,
+		},
+	],
 });
 
 // export model user with UserSchema

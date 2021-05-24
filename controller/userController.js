@@ -1,3 +1,4 @@
+const { post } = require('../app.js');
 const User = require('../model/User.js');
 
 const signupUser = async (req, res) => {
