@@ -21,7 +21,7 @@ const insertProduct = async (req, res) => {
 
 		const query = await product.save();
 
-		return res.json(query);
+		return res.redirect('back');
 	}
 
 	const product = new Product({
