@@ -30,9 +30,9 @@ const insertProduct = async (req, res) => {
 		createdBy: req.user.name,
 	});
 
-	const query = await product.save();
+	await product.save();
 
-	res.json(query);
+	res.redirect('back');
 };
 
 const renderProducts = async (req, res) => {

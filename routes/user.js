@@ -40,4 +40,6 @@ router.post('/addToCart/:productId', addToCart);
 
 router.post('/cartRemove/:productId', cartRemove);
 
+router.post('/profilePicture', cartRemove);
+
 module.exports = router;

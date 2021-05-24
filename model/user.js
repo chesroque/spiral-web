@@ -14,6 +14,10 @@ const UserSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	photo: {
+		data: Buffer,
+		contentType: String,
+	},
 	name: {
 		type: String,
 		required: true,
